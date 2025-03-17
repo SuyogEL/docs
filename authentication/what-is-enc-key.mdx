@@ -1,0 +1,52 @@
+---
+title: 'What is Enc Key?'
+description: 'Understanding the Encryption Key in OppiWallet API'
+icon: 'lock-keyhole'
+---
+
+### Enc Key Overview
+
+- **Function**: The Enc Key is used to create and sign JWT (JSON Web Tokens) for API requests
+- **Usage**: Used to cryptographically sign requests to verify their authenticity
+- **Visibility**: This should be treated as a private key and kept secure
+
+### Implementation
+
+To use your Enc Key properly:
+
+```javascript
+// Example of creating a JWT using the Enc Key
+const jwt = require('jsonwebtoken');
+
+// Payload for your API request
+const payload = {
+  // Your request data
+};
+
+// Create a signed JWT using your Enc Key
+const token = jwt.sign(payload, 'YOUR_ENC_KEY', { 
+  algorithm: 'HS256',
+  expiresIn: '1h'
+});
+
+// Include this token in your request
+```
+
+### Purpose
+
+The Enc Key enables OppiWallet's systems to:
+- Verify the authenticity of your requests
+- Ensure data integrity during transmission
+- Prevent unauthorized access to your account's functionality
+
+### Security Considerations
+
+Since the Enc Key functions similarly to a private key:
+
+- **Never share** your Enc Key with third parties
+- **Store securely** in environment variables or secure key management services
+- **Rotate keys** periodically as part of security best practices
+- If your Enc Key is accidentally exposed:
+  1. Delete the compromised key immediately
+  2. Create a new key pair
+  3. Update all integrations with the new keys

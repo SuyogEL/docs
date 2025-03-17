@@ -1,0 +1,94 @@
+---
+title: 'Generate JWT Token'
+description: 'Learn how to create and sign JWT tokens for API authentication'
+icon: 'signature'
+---
+
+### JWT Requirements
+
+Your JWT must meet the following specifications:
+
+- **Algorithm**: HS256 (HMAC SHA-256)
+- **Signature**: Created using SHA-256 hash
+- **Expiration**: Short-lived token (60 seconds)
+
+### Creating the Signature
+
+Before generating the JWT, you need to create a signature:
+
+```javascript
+const crypto = require('crypto');
+
+// Example values
+const currency = 'BTC';
+const amount = '0.001';
+const orderId = '12345';
+
+// Create signature string
+const signatureData = `${currency}#${amount}#${orderId}`;
+
+// Generate signature hash
+const signature = crypto
+  .createHash("sha256")
+  .update(JSON.stringify(signatureData))
+  .digest("hex");
+```
+
+### JWT Payload Structure
+
+Your JWT payload must include:
+
+```javascript
+const payload = {
+  "url": "/path/to/endpoint",  // API endpoint path
+  "iat": Date.now(),          // Issued at time (milliseconds)
+  "exp": Date.now() + 60000,  // Expiration time (current time + 60 seconds)
+  "key": "YOUR_AUTH_KEY",     // Your Auth Key
+  "signature": signature      // The signature created above
+};
+```
+
+**Important Notes:**
+- All datetime values must be in GMT format
+- The expiration time (`exp`) must be set to current time + 60 seconds (in milliseconds)
+
+### Generating the JWT
+
+Use your Enc Key to sign the JWT:
+
+```javascript
+const jwt = require('jsonwebtoken');
+
+// Create the signed token
+const token = jwt.sign(
+  payload,
+  'YOUR_ENC_KEY',   // Your Enc Key
+  { algorithm: 'HS256' }
+);
+
+// The token can now be used in your API request
+```
+
+### Using the JWT in Requests
+
+Include the JWT in your API requests:
+
+```javascript
+const headers = {
+  'Authorization': `Bearer ${token}`,
+  'x-auth-key': 'YOUR_AUTH_KEY',
+  'Content-Type': 'application/json'
+};
+
+// Make your API request with these headers
+```
+
+### Troubleshooting
+
+If you encounter authentication errors:
+
+- Verify your Auth Key and Enc Key are correct and active
+- Check that your system clock is synchronized (JWT validation is time-sensitive)
+- Ensure all required payload fields are present and correctly formatted
+- Verify that your signature is being generated correctly
+

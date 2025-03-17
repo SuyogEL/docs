@@ -1,0 +1,176 @@
+---
+title: 'Supported Currencies'
+api: 'GET /v1/supportedCurrency'
+description: 'This API is used to retrieve a list of supported currencies.'
+---
+
+## Authentication
+
+<ParamField header="signatureToken" type="string" required>
+  A JWT token required for API authentication.
+Generate JWT token as explained in section <a href="/authentication/generate-jwt-token">Generate JWT Token</a> using empty string.
+</ParamField>
+## Headers
+
+<ParamField header="Content-Type" type="string" required>
+  Must be set to `application/json`.
+</ParamField>
+
+## Response
+
+Returns a list of supported currencies.
+
+<ResponseField name="name" type="string" required>
+  The name of the currency.
+</ResponseField>
+
+<ResponseField name="symbol" type="string" required>
+  The symbol of the currency.
+</ResponseField>
+
+<ResponseField name="decimal" type="integer" required>
+  The number of decimal places supported.
+</ResponseField>
+
+<ResponseField name="usdPrice" type="string" required>
+  The price in USD.
+</ResponseField>
+
+<ResponseField name="eurPrice" type="string" required>
+  The price in EUR.
+</ResponseField>
+
+<ResponseField name="tryPrice" type="string" required>
+  The price in TRY.
+</ResponseField>
+
+<ResponseField name="minPaymentAmount" type="string" required>
+  The minimum payment amount accepted.
+</ResponseField>
+
+<ResponseField name="id" type="string" required>
+  Unique identifier for the currency.
+</ResponseField>
+
+<RequestExample>
+```bash cURL
+curl --request GET \
+  --url https://doc-api.oppiwallet.com/api/supportedCurrency \
+  --header 'signatureToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' \
+  --header 'Content-Type: application/json'
+```
+
+```javascript JavaScript
+const axios = require('axios');
+
+let config = {
+  method: 'get',
+  maxBodyLength: Infinity,
+  url: 'https://doc-api.oppiwallet.com/api/supportedCurrency',
+  headers: { 
+    'signatureToken': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmkiOiJjcmVhdGVUcmFuc2FjdGlvblJlcXVlc3QiLCJpYXQiOjE3MTUxNTM2NTQsImV4cCI6MTcxNTE1MzcwOSwia2V5Ijoicmh0TmJELU9yTFQteFp3M3QtMkpFWnR4Iiwic2lnbmF0dXJlU3RyaW5nIjoiMWVjY2M1NDc0YWZiMzU4NDExNDEzNjBkOGQ0MDBlMWYxOWIzNRjYzVkM2YxNTRjNmQ5YjViNSJ9.JuF7d8Oc4EyMvm7s5g3CN9L9Wbl_TFI_yO8jt20dvHw',
+    'Content-Type': 'application/json'
+  }
+};
+
+axios.request(config)
+  .then((response) => {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
+
+```python Python
+import requests
+
+url = "https://doc-api.oppiwallet.com/api/supportedCurrency"
+
+headers = {
+    "signatureToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "Content-Type": "application/json"
+}
+
+response = requests.get(url, headers=headers)
+print(response.json())
+```
+
+```go Go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+	url := "https://doc-api.oppiwallet.com/api/supportedCurrency"
+	
+	req, _ := http.NewRequest("GET", url, nil)
+	req.Header.Add("signatureToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
+	req.Header.Add("Content-Type", "application/json")
+	
+	res, _ := http.DefaultClient.Do(req)
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+	
+	fmt.Println(string(body))
+}
+```
+
+```php PHP
+<?php
+$curl = curl_init();
+
+curl_setopt_array($curl, [
+  CURLOPT_URL => "https://doc-api.oppiwallet.com/api/supportedCurrency",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => [
+    "signatureToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "Content-Type: application/json"
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+?>
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200 OK
+[
+  {
+    "name": "Bitcoin",
+    "symbol": "BTC",
+    "decimal": 18,
+    "usdPrice": "0.4573",
+    "eurPrice": "0.421934928",
+    "tryPrice": "14.934817532999999",
+    "minPaymentAmount": "1",
+    "id": "6698aec7f188ae24c673da1c"
+  }
+]
+```
+
+```json 400 Bad Request
+{
+  "message": "Error message"
+}
+```
+</ResponseExample>

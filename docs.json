@@ -1,11 +1,17 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mint Starter Kit",
+  "theme": "willow",
+  "fonts": {
+    "family": "Poppins",
+    "source": "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap",
+    "weight": 500,
+    "format": "woff2"
+  },
+  "name": "Oppiwallet Developer Docs",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#CA24FD",  
+    "light": "#e48bff",   
+    "dark": "#CA24FD"  
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -16,20 +22,18 @@
           {
             "group": "Get Started",
             "pages": [
-              "introduction",
-              "quickstart",
-              "development"
+              "introduction"
             ]
           },
           {
-            "group": "Essentials",
+            "group": "Authentication",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "authentication/api-key-setup",
+              "authentication/api-key-restrictions",
+              "authentication/what-is-auth-key",
+              "authentication/what-is-enc-key",
+              "authentication/generate-jwt-token",
+              "authentication/enabling-accounts"
             ]
           }
         ]
@@ -38,58 +42,29 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Endpoints",
             "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint Examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/endpoints/supported-currencies",
+              "api-reference/endpoints/all-transactions",
+              "api-reference/endpoints/transaction",
+              "api-reference/endpoints/get-balance",
+              "api-reference/endpoints/deposit",
+              "api-reference/endpoints/withdraw-manual",
+              "api-reference/endpoints/withdraw-auto"
             ]
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
   },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+  "api": {
+    "mdx": {
+      "server": "https://oppiwallet.com/"
+     
     }
   },
   "footer": {

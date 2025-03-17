@@ -1,0 +1,33 @@
+---
+title: 'API Key Setup'
+description: 'Learn how to set up and manage API keys for OppiWallet'
+icon: 'key'
+---
+
+### Creating API Keys
+
+1. **Register an account** with OppiWallet.
+2. **Go to the API section** on the OppiWallet home page.
+3. **Generate API keys** as needed:
+   - You can create multiple API keys for different applications.
+   - Each API key consists of an **Auth Key** and an **Enc Key**.
+
+### Approval Process
+
+- New API keys require **admin approval**.
+- You'll receive a notification upon approval.
+- Once approved, integrate the keys into your system.
+
+### Integration Details
+
+- **API Base URL**: `https://doc-api.oppiwallet.com/api`
+- Use your API keys in requests as per the [Authentication](/api-reference/authentication) guidelines.
+
+### Security Best Practices
+
+- **Do not share** API keys publicly.
+- **Store securely** in environment variables or vaults.
+- If compromised:
+  - Delete affected keys
+  - Generate new keys
+  - Update integrations

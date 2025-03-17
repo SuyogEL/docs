@@ -1,0 +1,215 @@
+---
+title: 'Transaction'
+api: 'GET /v1/transaction/{transactionId}'
+description: 'This API is used to retrieve details of a specific transaction.'
+---
+
+## Authentication
+
+<ParamField header="signatureToken" type="string" required>
+  A JWT token required for API authentication.
+Generate JWT token as explained in section <a href="/authentication/generate-jwt-token">Generate JWT Token</a> using empty string.
+</ParamField>
+
+## Headers
+
+<ParamField header="Content-Type" type="string" required>
+  Must be set to `application/json`.
+</ParamField>
+
+## Path Parameters
+
+<ParamField path="transactionId" type="string" required>
+  The unique identifier of the transaction you want to retrieve.
+</ParamField>
+
+## Query Parameters
+
+<ParamField query="transactionType" type="number" required>
+  Transaction type: 1 for deposit transaction and 2 for withdraw transaction.
+</ParamField>
+
+## Request
+
+No request body is required for this endpoint.
+
+<RequestExample>
+```bash cURL
+curl --request GET \
+  --url 'https://doc-api.oppiwallet.com/api/v1/transaction/03ea5d69-9ebf-4bfc-9b77-3aec6a6784d6?transactionType=1' \
+  --header 'signatureToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' \
+  --header 'Content-Type: application/json'
+```
+
+```javascript JavaScript
+const axios = require('axios');
+
+let config = {
+  method: 'get',
+  maxBodyLength: Infinity,
+  url: 'https://doc-api.oppiwallet.com/api/v1/transaction/03ea5d69-9ebf-4bfc-9b77-3aec6a6784d6?transactionType=1',
+  headers: { 
+    'signatureToken': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmkiOiJjcmVhdGVUcmFuc2FjdGlvblJlcXVlc3QiLCJpYXQiOjE3MTUxNTM2NTQsImV4cCI6MTcxNTE1MzcwOSwia2V5Ijoicmh0TmJELU9yTFQteFp3M3QtMkpFWnR4Iiwic2lnbmF0dXJlU3RyaW5nIjoiMWVjY2M1NDc0YWZiMzU4NDExNDEzNjBkOGQ0MDBlMWYxOWIzNRjYzVkM2YxNTRjNmQ5YjViNSJ9.JuF7d8Oc4EyMvm7s5g3CN9L9Wbl_TFI_yO8jt20dvHw',
+    'Content-Type': 'application/json'
+  }
+};
+
+axios.request(config)
+  .then((response) => {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
+
+```python Python
+import requests
+
+transaction_id = "03ea5d69-9ebf-4bfc-9b77-3aec6a6784d6"
+url = f"https://doc-api.oppiwallet.com/api/v1/transaction/{transaction_id}"
+
+headers = {
+    "signatureToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "Content-Type": "application/json"
+}
+
+params = {
+    "transactionType": 1
+}
+
+response = requests.get(url, headers=headers, params=params)
+print(response.json())
+```
+
+```go Go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+	url := "https://doc-api.oppiwallet.com/api/v1/transaction/03ea5d69-9ebf-4bfc-9b77-3aec6a6784d6?transactionType=1"
+
+	req, _ := http.NewRequest("GET", url, nil)
+	req.Header.Add("signatureToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
+	req.Header.Add("Content-Type", "application/json")
+
+	res, _ := http.DefaultClient.Do(req)
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(string(body))
+}
+```
+
+```php PHP
+<?php
+$curl = curl_init();
+
+$transactionId = "03ea5d69-9ebf-4bfc-9b77-3aec6a6784d6";
+$transactionType = 1;
+
+curl_setopt_array($curl, [
+  CURLOPT_URL => "https://doc-api.oppiwallet.com/api/v1/transaction/{$transactionId}?transactionType={$transactionType}",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => [
+    "signatureToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "Content-Type: application/json"
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+?>
+```
+</RequestExample>
+
+## Response
+
+Returns the details of the requested transaction.
+
+<ResponseField name="transactionId" type="string" required>
+  Unique identifier for the transaction.
+</ResponseField>
+
+<ResponseField name="receiverAddress" type="string" required>
+  The address where funds were sent.
+</ResponseField>
+
+<ResponseField name="depositAddress" type="string" required>
+  The address where funds were deposited.
+</ResponseField>
+
+<ResponseField name="orderId" type="string" required>
+  The order ID reference for the transaction.
+</ResponseField>
+
+<ResponseField name="tag" type="string">
+  Tag associated with the transaction, if any.
+</ResponseField>
+
+<ResponseField name="currency" type="string" required>
+  The cryptocurrency used in the transaction.
+</ResponseField>
+
+<ResponseField name="amount" type="string" required>
+  The transaction amount.
+</ResponseField>
+
+<ResponseField name="callbackStatus" type="number" required>
+  Status of the callback.
+</ResponseField>
+
+<ResponseField name="createdAt" type="string" required>
+  Timestamp when the transaction was created.
+</ResponseField>
+
+<ResponseField name="status" type="number" required>
+  Status of the transaction. 0=Pending, 1=Completed, 2=Failed
+</ResponseField>
+
+<ResponseExample>
+```json 200 OK
+{
+  "transactionId": "03ea5d69-9ebf-4bfc-9b77-3aec6a6784d6",
+  "receiverAddress": "0xAB710B08A....E02421Ff9Ef231Ee212",
+  "depositAddress": "0xd5350F580....2bC925a07091b443732",
+  "orderId": "ORDER_1",
+  "tag": "",
+  "currency": "ETH",
+  "amount": "0.01",
+  "callbackStatus": 0,
+  "createdAt": "2024-05-09T06:05:20.087Z",
+  "status": 0
+}
+```
+
+```json 400 Bad Request
+{
+  "message": "Error message"
+}
+```
+
+```json 404 Not Found
+{
+  "message": "Transaction not found"
+}
+```
+</ResponseExample>

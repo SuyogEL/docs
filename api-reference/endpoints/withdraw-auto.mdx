@@ -1,0 +1,232 @@
+---
+title: 'Withdraw (Auto)'
+api: 'POST /v1/autoWithdraw'
+description: 'This API is used to make automatic withdraw to external address. Make sure you follow below instructions otherwise it will not work.'
+---
+
+## Instructions
+
+### Source Code
+- Download script from [here](#)
+
+### Required Stuff
+- Linux Server
+- Node JS (v18.19.1 or later)
+
+### Setup
+- Open config.json file and replace mnemonic, apiKey, encKey.
+- Execute pair.js file using: `node pair.js`. It will install required packages.
+- Next you need to start crypto.ts on your server.
+
+## Authentication
+
+<ParamField header="signatureToken" type="string" required>
+  A JWT token required for API authentication.
+Generate JWT token as explained in section <a href="/authentication/generate-jwt-token">Generate JWT Token</a> using empty string.
+</ParamField>
+
+## Headers
+
+<ParamField header="Content-Type" type="string" required>
+  Must be set to `application/json`.
+</ParamField>
+
+## Request Body
+
+<ParamField header="currency" type="string" required>
+  Assets Currency id.
+</ParamField>
+
+<ParamField header="amount" type="string" required>
+  Provide amount for transaction.
+</ParamField>
+
+<ParamField header="address" type="string" required>
+  The external address where funds will be sent.
+</ParamField>
+
+<RequestExample>
+```bash cURL
+curl --request POST \
+  --url https://doc-api.oppiwallet.com/api/v1/autoWithdraw \
+  --header 'signatureToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "currency": "6698aec7f188ae24c673da1c",
+    "amount": "0.01",
+    "address": "0xb6b5E02EBf4d20......3AfAbA034f2F8D8D07"
+  }'
+```
+
+```javascript JavaScript
+const axios = require('axios');
+
+let data = JSON.stringify({
+  "currency": "6698aec7f188ae24c673da1c",
+  "amount": "0.01",
+  "address": "0xb6b5E02EBf4d20......3AfAbA034f2F8D8D07"
+});
+
+let config = {
+  method: 'post',
+  maxBodyLength: Infinity,
+  url: 'https://doc-api.oppiwallet.com/api/v1/autoWithdraw',
+  headers: { 
+    'signatureToken': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlcmlNilsInR5cCI6IkpsdfsdfHJlcXVlc3QiLCJpYXQiOjE3MTUxNTM2NTQsImV4cCI6MTcxNTE1MzcwOSwia2V5Ijoicmh0TmJELU9yTFQteFp3M3QtMkpFWnR4Iiwic2lnbmF0dXJlU3RyaW5nIjoiMWVjY2M1NDc0YWZiMzU4NDExNDEzNjBkOGQ0MDBlMWYxOWIzNRjYzVkM2YxNTRjNmQ5YjViNSJ9.JuF7d8Oc4EyMvm7s5g3CN9L9Wbl_TFI_yO8jt20dvHw',
+    'Content-Type': 'application/json'
+  },
+  data: data
+};
+
+axios.request(config)
+  .then((response) => {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
+
+```python Python
+import requests
+
+url = "https://doc-api.oppiwallet.com/api/v1/autoWithdraw"
+
+headers = {
+    "signatureToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "Content-Type": "application/json"
+}
+
+data = {
+    "currency": "6698aec7f188ae24c673da1c",
+    "amount": "0.01",
+    "address": "0xb6b5E02EBf4d20......3AfAbA034f2F8D8D07"
+}
+
+response = requests.post(url, headers=headers, json=data)
+print(response.json())
+```
+
+```go Go
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+	url := "https://doc-api.oppiwallet.com/api/v1/autoWithdraw"
+
+	data := map[string]string{
+		"currency": "6698aec7f188ae24c673da1c",
+		"amount":   "0.01",
+		"address":  "0xb6b5E02EBf4d20......3AfAbA034f2F8D8D07",
+	}
+
+	jsonData, _ := json.Marshal(data)
+
+	req, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+	req.Header.Add("signatureToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
+	req.Header.Add("Content-Type", "application/json")
+
+	res, _ := http.DefaultClient.Do(req)
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(string(body))
+}
+```
+
+```php PHP
+<?php
+$curl = curl_init();
+
+$data = [
+    "currency" => "6698aec7f188ae24c673da1c",
+    "amount" => "0.01",
+    "address" => "0xb6b5E02EBf4d20......3AfAbA034f2F8D8D07"
+];
+
+curl_setopt_array($curl, [
+  CURLOPT_URL => "https://doc-api.oppiwallet.com/api/v1/autoWithdraw",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "POST",
+  CURLOPT_HTTPHEADER => [
+    "signatureToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "Content-Type: application/json"
+  ],
+  CURLOPT_POSTFIELDS => json_encode($data),
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+?>
+```
+
+```javascript NodeJS
+const axios = require('axios');
+
+let data = JSON.stringify({
+  "currency": "6698aec7f188ae24c673da1c",
+  "amount": "0.01",
+  "address": "0xb6b5E02EBf4d20......3AfAbA034f2F8D8D07"
+});
+
+let config = {
+  method: 'post',
+  maxBodyLength: Infinity,
+  url: 'https://doc-api.oppiwallet.com/api/v1/autoWithdraw',
+  headers: { 
+    'signatureToken': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlcmlNilsInR5cCI6IkpsdfsdfHJlcXVlc3QiLCJpYXQiOjE3MTUxNTM2NTQsImV4cCI6MTcxNTE1MzcwOSwia2V5Ijoicmh0TmJELU9yTFQteFp3M3QtMkpFWnR4Iiwic2lnbmF0dXJlU3RyaW5nIjoiMWVjY2M1NDc0Iiwic2lnbmF0dXJlU3RyaW5nIjoiMWVjY2M1NDc0YWZiMzU4NDExNDEzNjBkOGQ0MDBlMWYxOWIzNRjYzVkM2YxNTRjNmQ5YjViNSJ9.JuF7d8Oc4EyMvm7s5g3CN9L9Wbl_TFI_yO8jt20dvHw',
+    'Content-Type': 'application/json'
+  },
+  data: data
+};
+
+axios.request(config)
+  .then((response) => {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
+</RequestExample>
+
+## Response
+
+Returns a success message upon successful request.
+
+<ResponseField name="message" type="string" required>
+  Success message for the withdrawal request.
+</ResponseField>
+
+<ResponseExample>
+```json 200 OK
+{
+  "message": "Your withdraw request has been processed successfully!"
+}
+```
+
+```json 400 Bad Request
+{
+  "message": "Error message"
+}
+```
+</ResponseExample>

@@ -1,0 +1,159 @@
+---
+title: 'Wallet Balance'
+api: 'GET /v1/balance/{currencyId}'
+description: 'This API is used for get user wallet balance.'
+---
+
+## Authentication
+
+<ParamField header="signatureToken" type="string" required>
+  A JWT token required for API authentication.
+Generate JWT token as explained in section <a href="/authentication/generate-jwt-token">Generate JWT Token</a> using empty string.
+</ParamField>
+
+## Headers
+
+<ParamField header="Content-Type" type="string" required>
+  Must be set to `application/json`.
+</ParamField>
+
+## Path Parameters
+
+<ParamField path="currencyId" type="string" required>
+  The ID of the currency for which to retrieve the balance.
+</ParamField>
+
+## Request
+
+No request body is required for this endpoint.
+
+<RequestExample>
+```bash cURL
+curl --request GET \
+  --url 'https://doc-api.oppiwallet.com/api/v1/balance/6698aec7f188ae24c673da1c' \
+  --header 'signatureToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' \
+  --header 'Content-Type: application/json'
+```
+
+```javascript JavaScript
+const axios = require('axios');
+
+let config = {
+  method: 'get',
+  maxBodyLength: Infinity,
+  url: 'https://doc-api.oppiwallet.com/api/v1/balance/6698aec7f188ae24c673da1c',
+  headers: { 
+    'signatureToken': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmkiOiJjcmVhdGVUcmFuc2FjdGlvblJlcXVlc3QiLCJpYXQiOjE3MTUxNTM2NTQsImV4cCI6MTcxNTE1MzcwOSwia2V5Ijoicmh0TmJELU9yTFQteFp3M3QtMkpFWnR4Iiwic2lnbmF0dXJlU3RyaW5nIjoiMWVjY2M1NDc0YWZiMzU4NDExNDEzNjBkOGQ0MDBlMWYxOWIzNRjYzVkM2YxNTRjNmQ5YjViNSJ9.JuF7d8Oc4EyMvm7s5g3CN9L9Wbl_TFI_yO8jt20dvHw',
+    'Content-Type': 'application/json'
+  }
+};
+
+axios.request(config)
+  .then((response) => {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
+
+```python Python
+import requests
+
+currency_id = "6698aec7f188ae24c673da1c"
+url = f"https://doc-api.oppiwallet.com/api/v1/balance/{currency_id}"
+
+headers = {
+    "signatureToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "Content-Type": "application/json"
+}
+
+response = requests.get(url, headers=headers)
+print(response.json())
+```
+
+```go Go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+	url := "https://doc-api.oppiwallet.com/api/v1/balance/6698aec7f188ae24c673da1c"
+
+	req, _ := http.NewRequest("GET", url, nil)
+	req.Header.Add("signatureToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
+	req.Header.Add("Content-Type", "application/json")
+
+	res, _ := http.DefaultClient.Do(req)
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(string(body))
+}
+```
+
+```php PHP
+<?php
+$curl = curl_init();
+
+$currencyId = "6698aec7f188ae24c673da1c";
+
+curl_setopt_array($curl, [
+  CURLOPT_URL => "https://doc-api.oppiwallet.com/api/v1/balance/{$currencyId}",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => [
+    "signatureToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "Content-Type: application/json"
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+?>
+```
+</RequestExample>
+
+## Response
+
+Returns the current balance for the specified currency.
+
+<ResponseField name="balance" type="number" required>
+  The available balance in the wallet for the specified currency.
+</ResponseField>
+
+<ResponseExample>
+```json 200 OK
+{
+  "balance": 0.564333586
+}
+```
+
+```json 400 Bad Request
+{
+  "message": "Error message"
+}
+```
+
+```json 404 Not Found
+{
+  "message": "Currency not found"
+}
+```
+</ResponseExample>

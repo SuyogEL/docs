@@ -1,0 +1,36 @@
+---
+title: 'What is Auth Key?'
+description: 'Understanding the Authentication Key in OppiWallet API'
+icon: 'key-skeleton'
+---
+
+### Auth Key Overview
+
+- **Function**: The Auth Key serves as your identifier when making API requests to OppiWallet
+- **Usage**: You must include this key with every API request
+- **Visibility**: This can be considered similar to a public key
+
+### Implementation
+
+When making requests to the OppiWallet API, include your Auth Key in the request headers:
+
+```javascript
+const headers = {
+  'x-auth-key': 'YOUR_AUTH_KEY',
+  'Content-Type': 'application/json'
+};
+```
+
+### Purpose
+
+The Auth Key allows OppiWallet's systems to:
+- Identify which registered user is making the request
+- Associate the request with your specific API integration
+- Apply the correct permissions and rate limits to your requests
+
+### Security Considerations
+
+While the Auth Key is similar to a public key, you should still:
+- Avoid unnecessarily exposing it in client-side code
+- Follow proper API key management practices
+- Use environment variables to store the key in your applications
